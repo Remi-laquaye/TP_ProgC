@@ -1,19 +1,18 @@
-COBJS ?= client.o bmp.o couleur.o
-SOBJS ?= serveur.o 
+CC ?= gcc
+CFLAGS ?= -std=c11 -Wall -Wextra -Werror -pedantic -g
+CPPFLAGS ?=
+LDFLAGS ?=
+LDLIBS ?= -lm
 
-.SUFFIXES: .c .o
+.PHONY: all clean
 
-SERVER = serveur
-CLIENT = client
+all: serveur client
 
-all: $(SERVER) $(CLIENT)
+serveur: serveur.o couleur.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-$(SERVER): $(SOBJS)
-	gcc -o $(SERVER) $(SOBJS) -lm
+client: client.o bmp.o couleur.o
+	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
 
-$(CLIENT): $(COBJS)
-	gcc -o $(CLIENT) $(COBJS)
-
-.c.o: 
-	gcc -Wall -Werror -ggdb3 -c $*.c
-
+clean:
+	rm -f serveur client *.o pie_chart.svg

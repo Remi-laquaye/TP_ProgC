@@ -131,3 +131,15 @@ Autres exemples :
 bmp.c, bmp.h, client.c, client.h, couleur.c, couleur.h, Makefile,
 serveur.c, serveur.h
 
+## Utilisation
+
+Depuis `TP6/src`, compilez avec `make`, puis lancez le serveur dans un
+terminal avec `./serveur` (ou `./serveur --no-browser` pour seulement produire
+le SVG). Dans un autre terminal, analysez une image BMP avec
+`./client chemin/image.bmp [nombre_de_couleurs]`. Le nombre demandé est compris
+entre 1 et 30 et vaut 10 par défaut. Les BMP non compressés de 24 et 32 bits
+sont acceptés; le serveur écrit le graphique dans `pie_chart.svg`.
+
+Les modes `./client --message "bonjour"` et
+`./client --calcul + 23 45` permettent également de tester les messages et les
+opérations JSON. Chaque requête est un objet JSON envoyé sur une ligne.

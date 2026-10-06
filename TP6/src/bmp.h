@@ -5,17 +5,13 @@
  *
  */
 
-#ifndef __READ_BMP_H__
-#define __READ_BMP_H__
+#ifndef BMP_H
+#define BMP_H
 
+#include <stddef.h>
 #include <stdint.h>
 #include "couleur.h"
 
-// Reference: http://www.ue.eti.pg.gda.pl/fpgalab/zadania.spartan3/zad_vga_struktura_pliku_bmp_en.html
-// https://stackoverflow.com/questions/14279242/read-bitmap-file-into-structure
-
-// Structure de données d'une image bmp (en-tête)
-#pragma pack(push, 1)
 typedef struct
 {
   uint16_t type;
@@ -24,10 +20,7 @@ typedef struct
   uint16_t reserved2;
   uint32_t offset;
 } bmp_header;
-#pragma pack(pop)
 
-// Structure de données d'une image bmp (en-tête): détails (taille etc.)
-#pragma pack(push, 1)
 typedef struct
 {
   uint32_t info_header_size;
@@ -42,8 +35,8 @@ typedef struct
   uint32_t couleurs_utilise;
   uint32_t couleurs_important;
 } bmp_info_header;
-#pragma pack(pop)
 
-// analyse d'un fichier bmp (compter et trier)
-couleur_compteur *analyse_bmp_image(char *);
+couleur_compteur *analyse_bmp_image(const char *nom_de_fichier,
+                                    size_t nombre_couleurs);
+
 #endif

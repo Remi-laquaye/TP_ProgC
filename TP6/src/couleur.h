@@ -1,91 +1,61 @@
-/*
- * SPDX-FileCopyrightText: 2021 John Samuel
- *
- * SPDX-License-Identifier: GPL-3.0-or-later
- *
- */
+#ifndef COULEUR_H
+#define COULEUR_H
 
-#ifndef __COLOR_H__
-#define __COLOR_H__
-
+#include <stddef.h>
 #include <stdint.h>
 
-// Compte de bits (24 bits, 32 bits..)
-typedef enum COMPTEBIT
-{
-  BITS24,
-  BITS32
+#define MAX_COULEURS 30
+
+typedef enum {
+    BITS24 = 24,
+    BITS32 = 32
 } COMPTEBIT;
 
-// Structure de données d'une couleur de 32 bits
-#pragma pack(push, 1)
-typedef struct
-{
-  uint8_t bleu;
-  uint8_t vert;
-  uint8_t rouge;
-  uint8_t alpha;
+typedef struct {
+    uint8_t bleu;
+    uint8_t vert;
+    uint8_t rouge;
+    uint8_t alpha;
 } couleur32;
-#pragma pack(pop)
 
-// Structure de données d'une couleur de 24 bits
-#pragma pack(push, 1)
-typedef struct
-{
-  uint8_t bleu;
-  uint8_t vert;
-  uint8_t rouge;
+typedef struct {
+    uint8_t bleu;
+    uint8_t vert;
+    uint8_t rouge;
 } couleur24;
-#pragma pack(pop)
 
-// Structure de données d'un couleurs de 24/32 bits
-typedef struct
-{
-  COMPTEBIT compte_bit;
-  union
-  {
-    couleur24 *c24;
-    couleur32 *c32;
-  } c;
-  int size;
+typedef struct {
+    COMPTEBIT compte_bit;
+    union {
+        couleur24 *c24;
+        couleur32 *c32;
+    } c;
+    size_t size;
 } couleur;
 
-// Structure de données de compteur de couleurs de 32 bits
-typedef struct
-{
-  couleur32 c;
-  int compte;
+typedef struct {
+    couleur32 c;
+    size_t compte;
 } couleur32_compteur;
 
-// Structure de données de compteur de couleurs de 24 bits
-typedef struct
-{
-  couleur24 c;
-  int compte;
+typedef struct {
+    couleur24 c;
+    size_t compte;
 } couleur24_compteur;
 
-// Structure de données de compteur de couleurs de 24/32 bits
-typedef struct
-{
-  COMPTEBIT compte_bit;
-  union
-  {
-    couleur24_compteur *cc24;
-    couleur32_compteur *cc32;
-  } cc;
-  int size;
+typedef struct {
+    COMPTEBIT compte_bit;
+    union {
+        couleur24_compteur *cc24;
+        couleur32_compteur *cc32;
+    } cc;
+    size_t size;
 } couleur_compteur;
 
-// compter les couleurs distincts
-couleur_compteur *compte_couleur(couleur *, int);
-
-// afficher les couleurs
-void print_couleur(couleur *, int);
-
-// afficher le compte de couleurs distincts
-void print_couleur_compteur(couleur_compteur *);
-
-// trier le compte de couleurs distincts
-void trier_couleur_compteur(couleur_compteur *);
+couleur_compteur *compte_couleur(const couleur *image, size_t nombre_pixels);
+void print_couleur(const couleur *image, size_t nombre);
+void print_couleur_compteur(const couleur_compteur *compteur);
+void trier_couleur_compteur(couleur_compteur *compteur);
+void liberer_couleur_compteur(couleur_compteur *compteur);
 
 #endif
