@@ -5,15 +5,15 @@
  *
  */
 
-#ifndef __SERVER_H__
-#define __SERVER_H__
+#ifndef SERVEUR_H
+#define SERVEUR_H
+
+#include <stddef.h>
 
 #define PORT 8089
 
-/* accepter la nouvelle connection d'un client et lire les données
- * envoyées par le client. En suite, le serveur envoie un message
- * en retour
- */
-int renvoie_message(int, char *);
+int renvoie_message(int socket_client, const char *message);
+int recois_numeros_calcule(const char *requete, char *reponse,
+                           size_t capacite);
 
 #endif
